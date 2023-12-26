@@ -16,20 +16,23 @@
 
 fn main() {
     fib(8);
+    fib_second(8);
 }
 
 fn fib(n: u32) -> u32 {
-    let mut vector: Vec<u32> = Vec::new();
-    //let vector_iter = vector.iter();
-    let mut number: u32 = 0;
-    for i in 0..n + 1 {
-        //number = number + i;
-        print!("{:?}", vector[0]);
-        vector.push(number);
-        println!("{:?}", number);
-        number = i;
+    if n <= 1 {
+        return n;
     }
-    0
+    fib(n - 1) + fib(n - 2)
+}
+
+fn fib_second(n: u32) -> Vec<u32> {
+    //let mut vector: <u32> = Vec::new();
+    let mut vector = Vec::new();
+    for i in 0..n {
+        vector.push(fib(i));
+    }
+    vector
 }
 
 #[cfg(test)]
@@ -42,5 +45,13 @@ mod tests {
         assert_eq!(fib(1), 1);
         assert_eq!(fib(2), 1);
         assert_eq!(fib(7), 13);
+        assert_eq!(fib_second(0), []);
+        assert_eq!(fib_second(1), [0]);
+        assert_eq!(fib_second(2), [0, 1]);
+        assert_eq!(fib_second(8), [0, 1, 1, 2, 3, 5, 8, 13]);
+        assert_eq!(
+            fib_second(16),
+            [0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233, 377, 610]
+        );
     }
 }
